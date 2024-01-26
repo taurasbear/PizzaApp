@@ -70,6 +70,14 @@ namespace PizzaApp.Server.Controllers
 
             return Ok(pizzaOrder.Id);
         }
+        [HttpPost("clearDatabase")]
+        public IActionResult ClearDatabase()
+        {
+            _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureCreated();
+            SeedData.Initialize(_dbContext);
+            return Ok();
+        }
         [HttpGet("toppings/{orderId:int}")]
         public IActionResult GetToppingsById(int orderId)
         {

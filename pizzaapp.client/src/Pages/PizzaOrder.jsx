@@ -31,6 +31,25 @@ const PizzaOrder = () => {
         window.location.reload();
     }
 
+    const handleClearDatabase = async () => {
+        try {
+            const response = await fetch('./api/pizza/clearDatabase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to clear database");
+            }
+
+            window.location.reload();
+        } catch (error) {
+            console.error("Error clearing database:", error);
+        }
+    };
+
     const handleSaveOrder = async () => {
         try {
             const orderData = {
@@ -100,6 +119,9 @@ const PizzaOrder = () => {
                 </IconButton>
             </div>
             <p>Note: Base Pizza has Tomato sauce and Mozzarella cheese</p>
+            <Button variant="contained" onClick={() => { handleClearDatabase() }}>
+                Clear Database
+            </Button>
 
         </div >
     );
