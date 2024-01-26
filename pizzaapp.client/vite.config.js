@@ -46,19 +46,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/weatherforecast': {
-                target: 'https://localhost:7138/',
-                secure: false
-            },
-            '^/api/pizza/toppings': {
-                target: 'https://localhost:7138/',
-                secure: false
-            },
-            '^/api/pizza/sizes': {
-                target: 'https://localhost:7138/',
-                secure: false
-            },
-            '^/api/pizza/saveOrder': {
+            '^/api': {
                 target: 'https://localhost:7138/',
                 secure: false
             }

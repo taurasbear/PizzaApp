@@ -4,11 +4,19 @@ import ToppingsSelection from '../Components/ToppingsSelection.jsx';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useNavigate } from 'react-router-dom';
 
 const PizzaOrder = () => {
+
+    const navigate = useNavigate();
+
     const [pizzaSizes, setPizzaSizes] = useState([]);
     const [toppings, setToppings] = useState([]);
     const [selectedPizzaSize, setSelectedPizzaSize] = useState(null);
+
+    const handleViewOrders = () => {
+        navigate('/orders');
+    }
 
     const handlePizzaSizeSelect = (size) => {
         setSelectedPizzaSize(size);
@@ -34,7 +42,9 @@ const PizzaOrder = () => {
                 },
                 body: JSON.stringify(orderData),
             });
+
             handleRestartOrder();
+
             if (!response.ok) {
                 throw new Error("Failed to save order");
             }
@@ -44,28 +54,28 @@ const PizzaOrder = () => {
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const pizzaSizesResponse = await fetch('./api/pizza/sizes');
-                const toppingsResponse = await fetch('./api/pizza/toppings');
+    const populatePizzaData = async () => {
+        try {
+            const pizzaSizesResponse = await fetch('./api/pizza/sizes');
+            const toppingsResponse = await fetch('./api/pizza/toppings');
 
-                if (!pizzaSizesResponse.ok || !toppingsResponse.ok) {
-                    throw new Error("Failed to fetch Pizza data");
-                }
-
-                const pizzaSizesData = await pizzaSizesResponse.json();
-                const toppingsData = await toppingsResponse.json();
-
-                setPizzaSizes(pizzaSizesData);
-                setToppings(toppingsData);
+            if (!pizzaSizesResponse.ok || !toppingsResponse.ok) {
+                throw new Error("Failed to fetch Pizza data");
             }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
+
+            const pizzaSizesData = await pizzaSizesResponse.json();
+            const toppingsData = await toppingsResponse.json();
+
+            setPizzaSizes(pizzaSizesData);
+            setToppings(toppingsData);
         }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
-        fetchData();
+    useEffect(() => {
+        populatePizzaData();
     }, [])
     return (
         <div>
@@ -76,11 +86,15 @@ const PizzaOrder = () => {
             <Button variant="contained" onClick={() => { handleSaveOrder() }}>
                 Save Order
             </Button>
+            <Button variant="contained" onClick={() => { handleViewOrders() }}>
+                View Orders
+            </Button>
             <IconButton aria-label="Restart order" onClick={() => { handleRestartOrder() }}>
                 <RestartAltIcon />
             </IconButton>
         </div >
     );
+
 };
 
 export default PizzaOrder;

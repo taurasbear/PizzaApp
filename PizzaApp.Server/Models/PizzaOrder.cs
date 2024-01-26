@@ -3,19 +3,30 @@
     public class PizzaOrder
     {
         public int Id { get; set; }
-        public PizzaSize Size { get; set; }
+        public string Size { get; set; }
         public double Price { get; set; }
         private List<Topping> Toppings;
         public PizzaOrder()
         {
             Toppings = new List<Topping>();
         }
-        public void AddToppings(List<Topping> toppingList)
+        public void AddTopping(Topping topping)
         {
-            foreach(Topping t in toppingList)
+            Toppings.Add(topping);
+        }
+        public List<Topping> GetToppingsCopy()
+        {
+            List<Topping> copyList = new List<Topping>();
+            foreach (Topping topping in Toppings)
             {
-                Toppings.Add(t);
+                copyList.Add(topping);
+                Console.WriteLine($"--> Element name: {topping.Name}");
             }
+            return copyList;
+        }
+        public int GetCount()
+        {
+            return Toppings.Count();
         }
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaApp.Server.Models;
+using System;
+using System.IO;
 
 namespace PizzaApp.Server.Controllers
 {
@@ -30,6 +32,13 @@ namespace PizzaApp.Server.Controllers
             var result = _dbContext.Toppings.ToArray();
             return Ok(result);
         }
+        [HttpGet("orders")]
+        public IActionResult GetOrders()
+        {
+            var result = _dbContext.PizzaOrders.ToArray();
+            return Ok(result);
+        }
+
         [HttpPost("saveOrder")]
         public IActionResult SaveOrder([FromBody] PizzaOrderRequest orderRequest)
         {
@@ -40,22 +49,32 @@ namespace PizzaApp.Server.Controllers
             {
                 return BadRequest("Invalid PizzaSize.");
             }
-
             PizzaOrder pizzaOrder = new PizzaOrder()
             {
-                //Id = _dbContext.PizzaOrders.Count() + 1,
-                Size = existingSize,
-                Price = _service.CalculatePrice(orderRequest)
+                Size = existingSize.Name,
+                Price = _service.CalculatePrice(orderRequest),
             };
-            pizzaOrder.AddToppings(orderRequest.Toppings);
 
+            foreach (Topping t in orderRequest.Toppings)
+            {
+                if (t.Count > 0)
+                {
+                    pizzaOrder.AddTopping(t);
+                }
+            }
 
             _dbContext.PizzaOrders.Add(pizzaOrder);
-
-
             _dbContext.SaveChanges();
 
             return Ok(pizzaOrder.Id);
+        }
+        [HttpGet("toppings/{orderId:int}")]
+        public IActionResult GetToppingsById(int orderId)
+        {
+            var result = _dbContext.PizzaOrders.ToArray().FirstOrDefault(p => p.Id == orderId).GetToppingsCopy();
+            Console.WriteLine($"----->Result:{result.ToString()}");
+            Console.WriteLine($"----->Result count:{result.Count()}");
+            return Ok(result);
         }
         [HttpGet("price")]
         public IActionResult GetPrice(PizzaOrderRequest orderRequest)
