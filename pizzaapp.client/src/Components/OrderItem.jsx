@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import standardPizza from '../Images/standardPizza.png';
+import '../Styles/OrderItem.css';
 
 const OrderItem = ({ pizzaOrder }) => {
     const { id, size, price } = pizzaOrder;
 
     const [toppings, setToppings] = useState([]);
-    useEffect(() => {
-        populateToppingsData()
-    }, [])
 
     const populateToppingsData = async () => {
+
         try {
             const response = await fetch(`./api/pizza/toppings/${id}`)
             if (!response.ok) {
@@ -23,26 +22,26 @@ const OrderItem = ({ pizzaOrder }) => {
         }
 
     }
-    console.log("Pizza Order:", pizzaOrder);
-    console.log("id:", id);
-    console.log("size:", size);
-    console.log("toppings:", toppings);
-    console.log("price:", price);
+
+    useEffect(() => {
+        populateToppingsData()
+    }, [])
+
     return (
         <div className='order-item'>
             <div className='pizza-image'>
-                <img source={standardPizza} alt='Standard Pizza' />
+                <img src={standardPizza} alt='Standard Pizza' />
             </div>
             <div className='pizza-details'>
                 <div className='size-name'>
-                    <h4>{size.name}</h4>
+                    <h4>{size}</h4>
                 </div>
                 <div className='toppings'>
-                    {toppings.length === 0 ? <p>Loading...</p> : <p>{toppings.map(topping => topping.name).join(', ')}</p>}
+                    {toppings.length === 0 ? <p>No toppings</p> : <p>{toppings.map(topping => `${topping.count} x ${topping.name}`).join(', ')}</p>}
                 </div>
-                <div className='price'>
-                    <p>${price.toFixed(2)}</p>
-                </div>
+            </div>
+            <div className='price'>
+                <p>${price.toFixed(2)}</p>
             </div>
         </div>
     );

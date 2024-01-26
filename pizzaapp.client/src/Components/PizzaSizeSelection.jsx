@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import '../Styles/PizzaSizeSelection.css';
 
 const PizzaSizeSelection = ({ onSelectSize, pizzaSizes }) => {
 

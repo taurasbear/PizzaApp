@@ -30,26 +30,5 @@ namespace PizzaApp.Server
 
             return count;
         }
-        public List<Topping> AddToppings(List<Topping> toppingList)
-        {
-            List<Topping> newList = new List<Topping>();
-            foreach (Topping t in toppingList)
-            {
-                if (t.Count > 0)
-                {
-                    newList.Add(t);
-                }
-            }
-            return newList;
-        }
-        public Topping CopyTopping(Topping topping)
-        {
-            return new Topping()
-            {
-                Name = topping.Name,
-                Count = topping.Count,
-                Price = topping.Price
-            };
-        }
     }
 }

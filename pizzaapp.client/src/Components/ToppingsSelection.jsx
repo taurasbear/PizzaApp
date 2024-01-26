@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import ToppingItem from './ToppingItem';
 
 const ToppingsSelection = ({ onSelectToppings, initialToppings }) => {
-    //await initialToppings
     const [toppings, setToppings] = useState(initialToppings);
-    
+
     const handleAddTopping = (index) => {
         const updatedToppings = [...toppings];
         if (updatedToppings[index].count < 4) {

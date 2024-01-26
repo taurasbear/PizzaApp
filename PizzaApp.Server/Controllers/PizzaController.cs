@@ -38,7 +38,12 @@ namespace PizzaApp.Server.Controllers
             var result = _dbContext.PizzaOrders.ToArray();
             return Ok(result);
         }
-
+        [HttpGet("total")]
+        public IActionResult GetTotalCost()
+        {
+            var result = _dbContext.PizzaOrders.ToArray().Sum(p => p.Price);
+            return Ok(result);
+        }
         [HttpPost("saveOrder")]
         public IActionResult SaveOrder([FromBody] PizzaOrderRequest orderRequest)
         {
@@ -57,10 +62,7 @@ namespace PizzaApp.Server.Controllers
 
             foreach (Topping t in orderRequest.Toppings)
             {
-                if (t.Count > 0)
-                {
-                    pizzaOrder.AddTopping(t);
-                }
+                pizzaOrder.ToppingsCount.Add(t.Count);
             }
 
             _dbContext.PizzaOrders.Add(pizzaOrder);
@@ -71,10 +73,22 @@ namespace PizzaApp.Server.Controllers
         [HttpGet("toppings/{orderId:int}")]
         public IActionResult GetToppingsById(int orderId)
         {
-            var result = _dbContext.PizzaOrders.ToArray().FirstOrDefault(p => p.Id == orderId).GetToppingsCopy();
-            Console.WriteLine($"----->Result:{result.ToString()}");
-            Console.WriteLine($"----->Result count:{result.Count()}");
-            return Ok(result);
+            var toppings = _dbContext.Toppings.ToArray();
+            var toppingsCount = _dbContext.PizzaOrders.ToArray().FirstOrDefault(p => p.Id == orderId).ToppingsCount;
+            List<Topping> toppingsById = new List<Topping>();
+            for (int i = 0; i < toppings.Count(); i++)
+            {
+                if (toppingsCount[i] > 0)
+                {
+                    toppingsById.Add(new Topping()
+                    {
+                        Name = toppings[i].Name,
+                        Count = toppingsCount[i],
+                        Price = toppings[i].Price,
+                    });
+                }
+            }
+            return Ok(toppingsById);
         }
         [HttpGet("price")]
         public IActionResult GetPrice(PizzaOrderRequest orderRequest)

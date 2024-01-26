@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useNavigate } from 'react-router-dom';
+import '../Styles/PizzaOrder.css';
 
 const PizzaOrder = () => {
 
@@ -25,9 +26,11 @@ const PizzaOrder = () => {
     const handleToppingsSelect = (updatedToppings) => {
         setToppings(updatedToppings);
     }
+
     const handleRestartOrder = () => {
         window.location.reload();
     }
+
     const handleSaveOrder = async () => {
         try {
             const orderData = {
@@ -77,21 +80,27 @@ const PizzaOrder = () => {
     useEffect(() => {
         populatePizzaData();
     }, [])
+
     return (
         <div>
             <h2>Pizza Sizes</h2>
             {pizzaSizes.length === 0 ? <h3>Loading...</h3> : <PizzaSizeSelection onSelectSize={handlePizzaSizeSelect} pizzaSizes={pizzaSizes} />}
             <h2>Pizza Toppings</h2>
             {toppings.length === 0 ? <h3>Loading...</h3> : <ToppingsSelection onSelectToppings={handleToppingsSelect} initialToppings={toppings} />}
-            <Button variant="contained" onClick={() => { handleSaveOrder() }}>
-                Save Order
-            </Button>
-            <Button variant="contained" onClick={() => { handleViewOrders() }}>
-                View Orders
-            </Button>
-            <IconButton aria-label="Restart order" onClick={() => { handleRestartOrder() }}>
-                <RestartAltIcon />
-            </IconButton>
+
+            <div className='orderButton'>
+                <Button variant="contained" onClick={() => { handleSaveOrder() }}>
+                    Save Order
+                </Button>
+                <Button variant="contained" onClick={() => { handleViewOrders() }}>
+                    View Orders
+                </Button>
+                <IconButton aria-label="Restart order" onClick={() => { handleRestartOrder() }}>
+                    <RestartAltIcon />
+                </IconButton>
+            </div>
+            <p>Note: Base Pizza has Tomato sauce and Mozzarella cheese</p>
+
         </div >
     );
 

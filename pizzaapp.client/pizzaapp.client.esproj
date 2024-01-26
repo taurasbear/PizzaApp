@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\Components\" />
+    <Folder Include="src\Styles\" />
     <Folder Include="src\Pages\" />
   </ItemGroup>
 </Project>

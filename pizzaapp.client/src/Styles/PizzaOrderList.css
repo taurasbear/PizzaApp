@@ -1,0 +1,16 @@
+.total-cost {
+    background-color: #36a9e0;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 5px;
+    margin-top:60px;
+}
+.total-cost p {
+        margin: 0;
+}
+
