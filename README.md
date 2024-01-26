@@ -6,6 +6,7 @@ https://tauraspizza.azurewebsites.net
 
 # Notes
 Finished 1.0 on 2024-01-26 22:46
+
 Finished 2.0 on 2024-01-26 23:39
 
 EF Core In-Memory database used and works
