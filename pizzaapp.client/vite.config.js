@@ -57,6 +57,10 @@ export default defineConfig({
             '^/api/pizza/sizes': {
                 target: 'https://localhost:7138/',
                 secure: false
+            },
+            '^/api/pizza/saveOrder': {
+                target: 'https://localhost:7138/',
+                secure: false
             }
         },
         port: 5173,

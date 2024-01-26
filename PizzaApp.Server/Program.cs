@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<PizzaDbContext>(options => options.UseInMemoryDatabase("PizzaDatabase"));
 builder.Services.AddControllers();
+builder.Services.AddScoped<PizzaService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

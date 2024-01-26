@@ -10,20 +10,12 @@
         {
             Toppings = new List<Topping>();
         }
-        public void AddTopping(Topping topping)
+        public void AddToppings(List<Topping> toppingList)
         {
-            Toppings.Add(topping);
-        }
-        public int GetCount()
-        {
-            int count = 0;
-
-            foreach (Topping topping in Toppings)
+            foreach(Topping t in toppingList)
             {
-                count += topping.Count;
+                Toppings.Add(t);
             }
-
-            return count;
         }
     }
 }

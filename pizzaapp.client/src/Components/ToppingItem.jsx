@@ -7,11 +7,11 @@ const ToppingItem = ({ name, count, onAdd, onRemove }) => {
     return (
         <div>
             <span>{name}</span>
-            <IconButton arial-label={`Remove ${name}`} onClick={onRemove}>
+            <IconButton aria-label={`Remove ${name}`} onClick={onRemove}>
                 <RemoveIcon />
             </IconButton>
             <span>{count}</span>
-            <IconButton arial-label={`Add ${name}`} onClick={onAdd}>
+            <IconButton aria-label={`Add ${name}`} onClick={onAdd}>
                 <AddIcon />
             </IconButton>
         </div>

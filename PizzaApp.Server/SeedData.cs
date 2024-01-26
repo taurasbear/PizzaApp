@@ -9,9 +9,9 @@ namespace PizzaApp.Server
             if (!context.PizzaSizes.Any())
             {
                 context.PizzaSizes.AddRange(
-                    new PizzaSize { Id = 1, Name = "Small" },
-                    new PizzaSize { Id = 2, Name = "Medium" },
-                    new PizzaSize { Id = 3, Name = "Large" }
+                    new PizzaSize { Id = 1, Name = "Small", Price = 8 },
+                    new PizzaSize { Id = 2, Name = "Medium", Price = 10 },
+                    new PizzaSize { Id = 3, Name = "Large", Price = 12 }
                     );
 
                 context.SaveChanges();
